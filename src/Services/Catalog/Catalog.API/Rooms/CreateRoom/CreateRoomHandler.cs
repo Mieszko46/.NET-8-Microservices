@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using BuildingBlocks.CQRS;
+using Catalog.API.Models;
+using Marten;
 
 namespace Catalog.API.Rooms.CreateRoom
 {
@@ -7,15 +9,28 @@ namespace Catalog.API.Rooms.CreateRoom
 		List<string> Category,
 		string Description,
 		string ImageFile,
-		decimal Price) : IRequest<CreateRoomResult>;
+		decimal Price) : ICommand<CreateRoomResult>;
 
 	public record CreateRoomResult(Guid Id);
 
-	internal class CreateRoomCommandHandler : IRequestHandler<CreateRoomCommand, CreateRoomResult>
+	internal class CreateRoomCommandHandler(IDocumentSession session) : ICommandHandler<CreateRoomCommand, CreateRoomResult>
 	{
-		public Task<CreateRoomResult> Handle(CreateRoomCommand request, CancellationToken cancellationToken)
+		public async Task<CreateRoomResult> Handle(CreateRoomCommand command, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			// create Room entity from command object
+			var room = new Room
+			{
+				Name = command.Name,
+				Category = command.Category,
+				Description = command.Description,
+				ImageFile = command.ImageFile,
+				Price = command.Price,
+			};
+
+			// TODO
+			// save to database
+
+			return new CreateRoomResult(Guid.NewGuid());
 		}
 	}
 }

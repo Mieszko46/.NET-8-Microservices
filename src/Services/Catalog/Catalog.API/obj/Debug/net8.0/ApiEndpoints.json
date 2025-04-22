@@ -1,0 +1,36 @@
+[
+  {
+    "ContainingType": "Catalog.API.Rooms.CreateRoom.CreateRoomEndpoint\u002B\u003C\u003Ec",
+    "Method": "\u003CAddRoutes\u003Eb__0_0",
+    "RelativePath": "rooms",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Catalog.API.Rooms.CreateRoom.CreateRoomRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Catalog.API.Rooms.CreateRoom.CreateRoomResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 201
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/problem\u002Bjson"
+        ],
+        "StatusCode": 400
+      }
+    ],
+    "EndpointName": "CreateRoom",
+    "Description": "Create Room",
+    "Summary": "Create Room"
+  }
+]
