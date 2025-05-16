@@ -1,5 +1,33 @@
 [
   {
+    "ContainingType": "Catalog.API.Rooms.NewFolder.GetRoomsEndpoint\u002B\u003C\u003Ec",
+    "Method": "\u003CAddRoutes\u003Eb__0_0",
+    "RelativePath": "rooms",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Catalog.API.Rooms.NewFolder.GetRoomsResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/problem\u002Bjson"
+        ],
+        "StatusCode": 400
+      }
+    ],
+    "EndpointName": "GetRooms",
+    "Description": "Get Rooms",
+    "Summary": "Get Rooms"
+  },
+  {
     "ContainingType": "Catalog.API.Rooms.CreateRoom.CreateRoomEndpoint\u002B\u003C\u003Ec",
     "Method": "\u003CAddRoutes\u003Eb__0_0",
     "RelativePath": "rooms",
@@ -32,5 +60,39 @@
     "EndpointName": "CreateRoom",
     "Description": "Create Room",
     "Summary": "Create Room"
+  },
+  {
+    "ContainingType": "Catalog.API.Rooms.GetRoomById.GetRoomByIdEndpoint\u002B\u003C\u003Ec",
+    "Method": "\u003CAddRoutes\u003Eb__0_0",
+    "RelativePath": "rooms/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Catalog.API.Rooms.NewFolder.GetRoomsResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/problem\u002Bjson"
+        ],
+        "StatusCode": 400
+      }
+    ],
+    "EndpointName": "GetRoomById",
+    "Description": "Get Room By Id",
+    "Summary": "Get Room By Id"
   }
 ]

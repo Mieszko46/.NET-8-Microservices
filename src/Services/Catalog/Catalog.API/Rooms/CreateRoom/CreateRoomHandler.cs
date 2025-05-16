@@ -1,8 +1,4 @@
-﻿using BuildingBlocks.CQRS;
-using Catalog.API.Models;
-using Marten;
-
-namespace Catalog.API.Rooms.CreateRoom
+﻿namespace Catalog.API.Rooms.CreateRoom
 {
 	public record CreateRoomCommand(
 		string Name,
@@ -13,7 +9,8 @@ namespace Catalog.API.Rooms.CreateRoom
 
 	public record CreateRoomResult(Guid Id);
 
-	internal class CreateRoomCommandHandler(IDocumentSession session) : ICommandHandler<CreateRoomCommand, CreateRoomResult>
+	internal class CreateRoomCommandHandler(IDocumentSession session) 
+		: ICommandHandler<CreateRoomCommand, CreateRoomResult>
 	{
 		public async Task<CreateRoomResult> Handle(CreateRoomCommand command, CancellationToken cancellationToken)
 		{
@@ -27,10 +24,11 @@ namespace Catalog.API.Rooms.CreateRoom
 				Price = command.Price,
 			};
 
-			// TODO
 			// save to database
+			session.Store(room);
+			await session.SaveChangesAsync(cancellationToken);
 
-			return new CreateRoomResult(Guid.NewGuid());
+			return new CreateRoomResult(room.Id);
 		}
 	}
 }

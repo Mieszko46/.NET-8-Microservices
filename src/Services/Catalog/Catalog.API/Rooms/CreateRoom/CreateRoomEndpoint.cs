@@ -14,6 +14,8 @@ namespace Catalog.API.Rooms.CreateRoom
 	{
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
+			// 'rooms' w liczbie mnogiej, ponieważ taka jest konencja REST, POST /rooms oznacza dodane nowego elementu do kolekcji pokoi
+			// zgodznie z konwencją REST, rzeczowniki w liczbie mnogiej reprezentują kolekcje zasobów.
 			app.MapPost("/rooms",
 				async (CreateRoomRequest request, ISender sender) =>
 			{

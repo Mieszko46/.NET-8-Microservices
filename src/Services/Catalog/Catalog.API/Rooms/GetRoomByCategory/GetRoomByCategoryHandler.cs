@@ -1,0 +1,27 @@
+﻿using Catalog.API.Rooms.GetRoomById;
+using Marten.Linq.QueryHandlers;
+
+namespace Catalog.API.Rooms.GetRoomByCategory
+{
+	public record GetRoomByCategoryQuery(string Category) : IQuery<GetRoomByCategoryResult>;
+
+	public record GetRoomByCategoryResult(IEnumerable<Room> Rooms);
+
+	internal class GetRoomByCategoryQueryHandler(IDocumentSession session, ILogger<GetRoomByCategoryQueryHandler> logger) 
+		: IQueryHandler<GetRoomByCategoryQuery, GetRoomByCategoryResult>
+	{
+		public async Task<GetRoomByCategoryResult> Handle(GetRoomByCategoryQuery query, CancellationToken cancellationToken)
+		{
+			logger.LogInformation("GetRoomByCategoryQueryHandler.Handle called with {@Query}", query);
+
+			var result = await session.Query<Room>().Where(x => x.Category.Contains(query.Category)).ToListAsync(cancellationToken);
+
+			if (result is null)
+			{
+				throw new RoomNotFoundException();
+			}
+
+			return new GetRoomByCategoryResult(result);
+		}
+	}
+}
