@@ -7,11 +7,11 @@ namespace Catalog.API.Rooms.GetRoomByCategory
 
 	public record GetRoomByCategoryResponse(IEnumerable<Room> Rooms);
 
-	internal class GetRoomByCategoryEndpoint : ICarterModule
+	public class GetRoomByCategoryEndpoint : ICarterModule
 	{
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-			app.MapGet("rooms/category/{category}",		// używaliśmy już rooms/{id} w innych przykładach, więc aby zachować dobre praktyki
+			app.MapGet("/rooms/category/{category}",		// używaliśmy już rooms/{id} w innych przykładach, więc aby zachować dobre praktyki
 														// dodajemy kolejną warstwę '/category'
 				async (string category, ISender sender) =>
 				{

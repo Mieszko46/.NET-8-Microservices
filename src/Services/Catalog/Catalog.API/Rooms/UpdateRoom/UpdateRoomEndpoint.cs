@@ -1,9 +1,14 @@
 ﻿
-using Catalog.API.Rooms.CreateRoom;
-
 namespace Catalog.API.Rooms.UpdateRoom
 {
-	public record UpdateRoomRequest(Room Room);
+	public record UpdateRoomRequest(
+		Guid Id,
+		string Name,
+		List<string> Category,
+		string Description,
+		string ImageFile,
+		decimal Price
+	);
 
 	public record UpdateRoomResponse(bool isSuccess);
 
@@ -11,14 +16,14 @@ namespace Catalog.API.Rooms.UpdateRoom
 	{
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-			app.MapPut("rooms",
+			app.MapPut("/rooms",
 				async (UpdateRoomRequest request, ISender sender) =>
 				{
 					var command = request.Adapt<UpdateRoomCommand>();
 
 					var result = await sender.Send(command);
 
-					var response = result.Adapt<UpdateRoomResponse>();
+					var response = new UpdateRoomResponse(result.isSuccess);
 
 					return Results.Ok(response);
 
@@ -29,7 +34,6 @@ namespace Catalog.API.Rooms.UpdateRoom
 				.ProducesProblem(StatusCodes.Status404NotFound)
 				.WithSummary("Update Room")
 				.WithDescription("Update Room");
-		});
 		}
 	}
 }

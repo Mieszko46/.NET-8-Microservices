@@ -20,11 +20,11 @@ namespace Catalog.API.Rooms.NewFolder
 				return Results.Ok(response);
 
 			})
-				.WithName("GetRooms")
-				.Produces<GetRoomsResponse>(StatusCodes.Status200OK)
-				.ProducesProblem(StatusCodes.Status400BadRequest)
-				.WithSummary("Get Rooms")
-				.WithDescription("Get Rooms");
+			.WithName("GetRooms")
+			.Produces<GetRoomsResponse>(StatusCodes.Status200OK)
+			.ProducesProblem(StatusCodes.Status400BadRequest)
+			.WithSummary("Get Rooms")
+			.WithDescription("Get Rooms");
 		}
 	}
 }

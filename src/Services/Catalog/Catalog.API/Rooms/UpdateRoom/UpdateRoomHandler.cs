@@ -1,7 +1,14 @@
 ﻿
 namespace Catalog.API.Rooms.UpdateRoom
 {
-	public record UpdateRoomCommand(Room Room) : ICommand<UpdateRoomResult>;
+	public record UpdateRoomCommand(
+		Guid Id,
+		string Name,
+		List<string> Category,
+		string Description,
+		string ImageFile,
+		decimal Price
+		) : ICommand<UpdateRoomResult>;
 
 	public record UpdateRoomResult(bool isSuccess);
 
@@ -12,19 +19,19 @@ namespace Catalog.API.Rooms.UpdateRoom
 		{
 			logger.LogInformation("UpdateRoomCommandHandler.Handle called with {@Command}", command);
 
-			var room = await session.LoadAsync<Room>(command.Room.Id, cancellationToken);
+			var room = await session.LoadAsync<Room>(command.Id, cancellationToken);
 
             if (room is null)
             {
 				throw new RoomNotFoundException();
             }
 
-			room.Id = command.Room.Id;
-			room.Name = command.Room.Name;
-			room.Description = command.Room.Description;
-			room.Category = command.Room.Category;
-			room.ImageFile = command.Room.ImageFile;
-			room.Price = command.Room.Price;
+			room.Id = command.Id;
+			room.Name = command.Name;
+			room.Description = command.Description;
+			room.Category = command.Category;
+			room.ImageFile = command.ImageFile;
+			room.Price = command.Price;
 
 			session.Update(room);
 			await session.SaveChangesAsync(cancellationToken);

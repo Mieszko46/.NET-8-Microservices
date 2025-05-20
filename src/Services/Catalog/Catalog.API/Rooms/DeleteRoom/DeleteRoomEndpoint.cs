@@ -5,18 +5,18 @@ namespace Catalog.API.Rooms.DeleteRoom
 {
 	//public record DeleteRoomRequest();
 
-	public record DeleteRoomResponse();
+	public record DeleteRoomResponse(bool isSuccess);
 
 	public class DeleteRoomEndpoint : ICarterModule
 	{
 		public void AddRoutes(IEndpointRouteBuilder app)
 		{
-			app.MapDelete("rooms/{id}",
+			app.MapDelete("/rooms/{id}",
 				async (Guid id, ISender sender) =>
 				{
 					var result = await sender.Send(new DeleteRoomCommand(id));
 
-					var response = result.Adapt<DeleteRoomResponse>();
+					var response = new DeleteRoomResponse(result.isSuccess);
 
 					return Results.Ok(response);
 				})
