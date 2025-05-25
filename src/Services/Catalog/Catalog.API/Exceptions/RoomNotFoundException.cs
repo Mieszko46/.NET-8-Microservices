@@ -1,7 +1,9 @@
-﻿namespace Catalog.API.Exceptions
+﻿using BuildingBlocks.Exceptions;
+
+namespace Catalog.API.Exceptions
 {
-	internal class RoomNotFoundException : Exception
+	internal class RoomNotFoundException : NotFoundException
 	{
-		public RoomNotFoundException() : base("Room not found!") { }
+		public RoomNotFoundException(Guid id) : base("Room", id) { }
 	}
 }

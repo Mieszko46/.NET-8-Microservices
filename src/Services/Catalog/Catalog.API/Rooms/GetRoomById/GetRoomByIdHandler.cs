@@ -16,7 +16,7 @@
 
 			if (result is null)
 			{
-				throw new RoomNotFoundException();
+				throw new RoomNotFoundException(query.id);
 			}
 
 			return new GetRoomByIdResult(result);

@@ -16,11 +16,6 @@ namespace Catalog.API.Rooms.GetRoomByCategory
 
 			var result = await session.Query<Room>().Where(x => x.Category.Contains(query.Category)).ToListAsync(cancellationToken);
 
-			if (result is null)
-			{
-				throw new RoomNotFoundException();
-			}
-
 			return new GetRoomByCategoryResult(result);
 		}
 	}

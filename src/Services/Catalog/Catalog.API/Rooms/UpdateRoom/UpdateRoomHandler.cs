@@ -36,7 +36,7 @@ namespace Catalog.API.Rooms.UpdateRoom
 
             if (room is null)
             {
-				throw new RoomNotFoundException();
+				throw new RoomNotFoundException(command.Id);
             }
 
 			room.Id = command.Id;
