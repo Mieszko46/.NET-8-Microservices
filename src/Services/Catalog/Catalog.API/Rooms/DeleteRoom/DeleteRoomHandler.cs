@@ -2,9 +2,16 @@
 
 namespace Catalog.API.Rooms.DeleteRoom
 {
-	public record DeleteRoomCommand(Guid id) : ICommand<DeleteRoomResult>;
+	public record DeleteRoomCommand(Guid Id) : ICommand<DeleteRoomResult>;
 
 	public record DeleteRoomResult(bool isSuccess);
+
+	public class DeleteRoomCommandValidator : AbstractValidator<DeleteRoomCommand>
+	{
+		public DeleteRoomCommandValidator() 
+		{
+			RuleFor(x => x.Id).NotEmpty().WithMessage("Id is required");
+		}
 
 	internal class DeleteRoomCommandHandler(IDocumentSession session, ILogger<DeleteRoomCommandHandler> logger) 
 		: ICommandHandler<DeleteRoomCommand, DeleteRoomResult>
@@ -13,9 +20,9 @@ namespace Catalog.API.Rooms.DeleteRoom
 		{
 			logger.LogInformation("DeleteRoomCommadHandler.Handle called with {@command}", command);
 
-			var room = await session.LoadAsync<Room>(command.id, cancellationToken) ?? throw new RoomNotFoundException();
+			var room = await session.LoadAsync<Room>(command.Id, cancellationToken) ?? throw new RoomNotFoundException();
 
-			session.Delete<Room>(command.id);
+			session.Delete<Room>(command.Id);
 			await session.SaveChangesAsync();
 
 			return new DeleteRoomResult(true);
