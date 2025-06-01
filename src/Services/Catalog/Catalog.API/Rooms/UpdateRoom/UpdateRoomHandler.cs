@@ -12,7 +12,7 @@ namespace Catalog.API.Rooms.UpdateRoom
 
 	public class UpdateRoomCommandValidator : AbstractValidator<UpdateRoomCommand>
 	{
-		UpdateRoomCommandValidator()
+		public UpdateRoomCommandValidator()
 		{
 			RuleFor(x => x.Id).NotEmpty().WithMessage("Id is required");
 			RuleFor(x => x.Name).

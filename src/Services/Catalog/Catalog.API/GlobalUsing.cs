@@ -6,6 +6,8 @@ global using FluentValidation;
 global using BuildingBlocks.CQRS;
 global using Catalog.API.Models;
 global using Catalog.API.Exceptions;
+global using BuildingBlocks.Behaviors;
+global using BuildingBlocks.Exceptions.Handler;
 
 // It is a good practice to create global using C# class unser the catalog API
 // If these usings are used in almost every file
