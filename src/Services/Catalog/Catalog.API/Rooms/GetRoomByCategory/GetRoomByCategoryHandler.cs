@@ -7,13 +7,11 @@ namespace Catalog.API.Rooms.GetRoomByCategory
 
 	public record GetRoomByCategoryResult(IEnumerable<Room> Rooms);
 
-	internal class GetRoomByCategoryQueryHandler(IDocumentSession session, ILogger<GetRoomByCategoryQueryHandler> logger) 
+	internal class GetRoomByCategoryQueryHandler(IDocumentSession session) 
 		: IQueryHandler<GetRoomByCategoryQuery, GetRoomByCategoryResult>
 	{
 		public async Task<GetRoomByCategoryResult> Handle(GetRoomByCategoryQuery query, CancellationToken cancellationToken)
 		{
-			logger.LogInformation("GetRoomByCategoryQueryHandler.Handle called with {@Query}", query);
-
 			var result = await session.Query<Room>().Where(x => x.Category.Contains(query.Category)).ToListAsync(cancellationToken);
 
 			return new GetRoomByCategoryResult(result);

@@ -14,13 +14,11 @@ namespace Catalog.API.Rooms.DeleteRoom
 		}
 	}
 
-	internal class DeleteRoomCommandHandler(IDocumentSession session, ILogger<DeleteRoomCommandHandler> logger) 
+	internal class DeleteRoomCommandHandler(IDocumentSession session) 
 		: ICommandHandler<DeleteRoomCommand, DeleteRoomResult>
 	{
 		public async Task<DeleteRoomResult> Handle(DeleteRoomCommand command, CancellationToken cancellationToken)
 		{
-			logger.LogInformation("DeleteRoomCommadHandler.Handle called with {@command}", command);
-
 			var room = await session.LoadAsync<Room>(command.Id, cancellationToken) ?? throw new RoomNotFoundException(command.Id);
 
 			session.Delete<Room>(command.Id);

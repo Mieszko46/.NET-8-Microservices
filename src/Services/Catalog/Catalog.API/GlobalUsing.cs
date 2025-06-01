@@ -8,6 +8,7 @@ global using Catalog.API.Models;
 global using Catalog.API.Exceptions;
 global using BuildingBlocks.Behaviors;
 global using BuildingBlocks.Exceptions.Handler;
+global using Catalog.API.Data;
 
 // It is a good practice to create global using C# class unser the catalog API
 // If these usings are used in almost every file

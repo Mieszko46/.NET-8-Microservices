@@ -20,14 +20,11 @@
 		}
 	}
 
-	internal class CreateRoomCommandHandler(IDocumentSession session, ILogger<CreateRoomCommandHandler> logger) 
+	internal class CreateRoomCommandHandler(IDocumentSession session) 
 		: ICommandHandler<CreateRoomCommand, CreateRoomResult>
 	{
 		public async Task<CreateRoomResult> Handle(CreateRoomCommand command, CancellationToken cancellationToken)
 		{
-			// validate data with fluent validation
-			logger.LogInformation("CreateRoomCommandHandler.Handle called with {@command}", command);
-
 			// create Room entity from command object
 			var room = new Room
 			{

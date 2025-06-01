@@ -25,13 +25,11 @@ namespace Catalog.API.Rooms.UpdateRoom
 
 	public record UpdateRoomResult(bool isSuccess);
 
-	internal class UpdateRoomCommandHandler(IDocumentSession session, ILogger<UpdateRoomCommandHandler> logger) 
+	internal class UpdateRoomCommandHandler(IDocumentSession session) 
 		: ICommandHandler<UpdateRoomCommand, UpdateRoomResult>
 	{
 		public async Task<UpdateRoomResult> Handle(UpdateRoomCommand command, CancellationToken cancellationToken)
 		{
-			logger.LogInformation("UpdateRoomCommandHandler.Handle called with {@Command}", command);
-
 			var room = await session.LoadAsync<Room>(command.Id, cancellationToken);
 
             if (room is null)
