@@ -1,7 +1,9 @@
 ﻿
+using Marten.Pagination;
+
 namespace Catalog.API.Rooms.GetRooms
 {
-	public record GetRoomsQuery() : IQuery<GetRoomsResult>;
+	public record GetRoomsQuery(int? PageNumber = 1, int? PageSize = 10) : IQuery<GetRoomsResult>;
 
 	public record GetRoomsResult (IEnumerable<Room> Rooms);
 
@@ -10,7 +12,8 @@ namespace Catalog.API.Rooms.GetRooms
 	{
 		public async Task<GetRoomsResult> Handle(GetRoomsQuery query, CancellationToken cancellationToken)
 		{
-			var rooms = await session.Query<Room>().ToListAsync(cancellationToken);
+			var rooms = await session.Query<Room>()
+				.ToPagedListAsync(query.PageNumber ?? 1, query.PageSize ?? 10, cancellationToken);
 
 			return new GetRoomsResult(rooms);
 		}
