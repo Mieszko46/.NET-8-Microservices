@@ -1,7 +1,4 @@
 ﻿
-using Basket.API.Basket.GetBasket;
-using Microsoft.AspNetCore.Mvc;
-
 namespace Basket.API.Basket.StoreBasket
 {
 	public record StoreBasketRequest(ShoppingCart Cart);

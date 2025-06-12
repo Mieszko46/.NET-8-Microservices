@@ -4,15 +4,13 @@
 
 	public record GetBasketResult(ShoppingCart Cart);
 
-	internal class GetBasketQueryHandler(IDocumentSession session) : IQueryHandler<GetBasketQuery, GetBasketResult>
+	internal class GetBasketQueryHandler(IBasketRepository repository) : IQueryHandler<GetBasketQuery, GetBasketResult>
 	{
 		public async Task<GetBasketResult> Handle(GetBasketQuery query, CancellationToken cancellationToken)
 		{
-			var shoopingCart = await session.Query<ShoppingCart>()
-											.Where(x => x.UserName == query.UserName)
-											.ToListAsync(token: cancellationToken);
+			var basket = await repository.GetBasket(query.UserName);
 
-			var result = shoopingCart.Adapt<GetBasketResult>();
+			var result = basket.Adapt<GetBasketResult>();
 
 			return result;
 		}

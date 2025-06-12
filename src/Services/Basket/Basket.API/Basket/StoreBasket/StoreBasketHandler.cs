@@ -1,6 +1,4 @@
 ﻿
-using FluentValidation;
-
 namespace Basket.API.Basket.StoreBasket
 {
 	public record StoreBasketCommand(ShoppingCart Cart) : ICommand<StoreBasketResult>;
@@ -16,12 +14,11 @@ namespace Basket.API.Basket.StoreBasket
 		}
 	}
 
-	internal class StoreBasketCommandHandler(IDocumentSession session) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
+	internal class StoreBasketCommandHandler(IBasketRepository repository) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
 	{
 		public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
 		{
-			session.Store(command.Cart);
-			await session.SaveChangesAsync();
+			await repository.StoreBasket(command.Cart);
 
 			return new StoreBasketResult(command.Cart.UserName);
 		}
