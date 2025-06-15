@@ -10,9 +10,7 @@
 		{
 			var basket = await repository.GetBasket(query.UserName);
 
-			var result = basket.Adapt<GetBasketResult>();
-
-			return result;
+			return new GetBasketResult(basket);
 		}
 	}
 }

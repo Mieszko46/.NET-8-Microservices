@@ -28,3 +28,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Basket.API.dll"]
+
+RUN echo '\pset pager off' >> /root/.psqlrc
