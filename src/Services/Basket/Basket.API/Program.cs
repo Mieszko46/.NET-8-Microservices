@@ -1,3 +1,4 @@
+using Basket.API.Data;
 using BuildingBlocks.Exceptions.Handler;
 
 var builder = WebApplication.CreateBuilder(args);

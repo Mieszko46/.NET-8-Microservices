@@ -1,4 +1,6 @@
 ﻿
+using Basket.API.Data;
+
 namespace Basket.API.Basket.StoreBasket
 {
 	public record StoreBasketCommand(ShoppingCart Cart) : ICommand<StoreBasketResult>;

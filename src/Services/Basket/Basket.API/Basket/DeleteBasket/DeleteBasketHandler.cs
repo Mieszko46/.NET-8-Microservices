@@ -1,4 +1,6 @@
-﻿namespace Basket.API.Basket.DeleteBasket
+﻿using Basket.API.Data;
+
+namespace Basket.API.Basket.DeleteBasket
 {
 	public record DeleteBasketCommand(string UserName) : ICommand<DeleteBasketResult>;
 	public record DeleteBasketResult(bool isSuccess);
