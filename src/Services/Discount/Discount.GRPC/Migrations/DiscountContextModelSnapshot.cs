@@ -36,6 +36,22 @@ namespace Discount.GRPC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Coupons");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 100,
+                            Description = "Discount for room with standard conditions",
+                            RoomCategory = "Standard"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 200,
+                            Description = "Discount for room with deluxe conditions",
+                            RoomCategory = "Deluxe"
+                        });
                 });
 #pragma warning restore 612, 618
         }
