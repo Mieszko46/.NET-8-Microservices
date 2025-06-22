@@ -1,13 +1,11 @@
-using Basket.API.Data;
-using BuildingBlocks.Exceptions.Handler;
+using Discount.GRPC;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Aplication Services
 var assembly = typeof(Program).Assembly;
-
 builder.Services.AddMediatR(config =>
 {
 
@@ -18,6 +16,8 @@ builder.Services.AddMediatR(config =>
 
 builder.Services.AddCarter();
 
+
+//Data Services
 builder.Services.AddMarten(options =>
 {
 	options.Connection(builder.Configuration.GetConnectionString("Database")!);
@@ -32,6 +32,15 @@ builder.Services.AddStackExchangeRedisCache(options =>
 	options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 
+
+//Grpc Services
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+	options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+});
+
+
+//Cross-Cutting Services
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()

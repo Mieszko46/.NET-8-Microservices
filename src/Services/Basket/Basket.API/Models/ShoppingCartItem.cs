@@ -6,6 +6,6 @@
 		public DateTime CheckOutDate { get; set; }
 		public decimal Price { get; set; }
 		public Guid RoomId { get; set; }
-		public string RoomName { get; set; } = default!;
+		public string RoomCategory { get; set; } = default!;
 	}
 }

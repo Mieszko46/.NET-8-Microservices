@@ -1,5 +1,7 @@
 ﻿
 using Basket.API.Data;
+using Discount.GRPC;
+using System.Threading;
 
 namespace Basket.API.Basket.StoreBasket
 {
@@ -16,13 +18,28 @@ namespace Basket.API.Basket.StoreBasket
 		}
 	}
 
-	internal class StoreBasketCommandHandler(IBasketRepository repository) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
+	internal class StoreBasketCommandHandler
+		(IBasketRepository repository, DiscountProtoService.DiscountProtoServiceClient discountProto)
+		: ICommandHandler<StoreBasketCommand, StoreBasketResult>
 	{
 		public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
 		{
+			await DeductDiscount(command.Cart, cancellationToken);
+
 			await repository.StoreBasket(command.Cart);
 
 			return new StoreBasketResult(command.Cart.UserName);
+		}
+
+		// Comunicate with Discount.Grpc and calculate lastest prices of rooms
+		private async Task DeductDiscount(ShoppingCart cart, CancellationToken cancellationToken)
+		{
+			foreach (var item in cart.Items)
+			{
+				var coupon = await discountProto.GetDiscountAsync(
+					new GetDiscountRequest { RoomCategory = item.RoomCategory }, cancellationToken: cancellationToken);
+				item.Price -= coupon.Amount;
+			}
 		}
 	}
 }
